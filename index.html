@@ -12,7 +12,10 @@
 </script>
   <style>
     :root { --main-fs: 75px; --sub-fs: 20px; }
-    html, body { height: 100%; margin: 0; padding: 0; background: #000; color: #fff; overflow: hidden; font-family: "BIZ UDPGothic", "Hiragino Sans", "Meiryo", sans-serif; }
+    html, body { height: 100%; margin: 0; padding: 0; background: #000; color: #fff; overflow: hidden;
+    /* UDデジタル教科書体を最優先にする */
+  font-family: "UD Digi Kyokasho N-R", "UD デジタル 教科書体 N-R", "UD Digi Kyokasho NK-R", "BIZ UDPGothic", "Hiragino Sans", "Meiryo", sans-serif; 
+}
     body { display: flex; flex-direction: column; }
 /* ヘッダー UI：横スクロール対応版 */
     .header { 
@@ -142,7 +145,7 @@ input, select {
     .trans-text { font-weight: 900; line-height: 1.2; word-wrap: break-word; letter-spacing: -0.01em; font-size: var(--main-fs); }
     
     /* 逆翻訳文：少し小さめの淡い緑色 */
-    .re-trans-text { font-size: calc(var(--sub-fs) * 0.9); color: #90ee90; opacity: 0.8; margin-top: 6px; padding-left: 15px; font-style: italic; }
+    .re-trans-text { font-size: calc(var(--sub-fs) * 0.9); color: #90ee90; opacity: 0.8; margin-top: 6px; padding-left: 15px; font-style: normal; }
     
     /* 過去ログの減衰 */
     .log-item:not(:first-child) { opacity: 0.4; filter: none; }
@@ -236,7 +239,7 @@ input, select {
 </div>
 
 <div class="footer-info">
-  <div class="footer-text">Ver.2.2</div>
+  <div class="footer-text">Ver.2.3 (2026/3/22更新)</div>
   <div class="footer-text">Created by フジイヨウスケ with Gemini & ChatGPT</div>
 </div>
 
@@ -341,13 +344,7 @@ input, select {
       </ul>
   </div>
 
-  <div class="help-section">
-    <h3>１０. その他</h3>
-    <ul>
-      <li>更新日：２０２６/３/２１</li>
-      </ul>
-  </div>
-  
+
   <button id="btn-close-help" onclick="document.getElementById('modal-help').style.display='none'">使い方　を閉じる</button>
 </div>
 
@@ -574,8 +571,11 @@ recognition.onresult = async e => {
       statusDot.style.color = "red";
       
       let interimTranscript = "";
+      let isFinalResult = false; // ★追加：確定フラグ
       for (let i = e.resultIndex; i < e.results.length; i++) {
         interimTranscript += e.results[i][0].transcript;
+        // ★ブラウザが「文章の区切りだ」と判断したかチェック
+        if (e.results[i].isFinal) isFinalResult = true;
       }
       
       const text = interimTranscript.trim();
@@ -594,9 +594,19 @@ recognition.onresult = async e => {
           // style="color:${mainColor.value}" を追加します
 interimContainer.innerHTML = `<span class="interim-orig">${currentText}</span><span class="interim-trans" style="color:${mainColor.value}">${trans}</span>`;
         } catch(e) { interimContainer.textContent = currentText; }
-      } else {
-        interimContainer.textContent = "... " + currentText;
+} else {
+        interimContainer.textContent = currentText;
       }
+
+      // ★【ここがポイント】
+      // AIが「確定」と言った時だけ即座にログへ。
+      // 言わない時は、下の watchdog（タイマー）が今まで通り処理してくれます。
+      if (isFinalResult) {
+        commitTranslation(currentText);
+        currentText = ""; 
+        interimContainer.textContent = "";
+      }
+      
       interimContainer.scrollTop = interimContainer.scrollHeight;
     };
       
@@ -969,7 +979,7 @@ window.addEventListener('keydown', (e) => {
 });
 
 
-    /*ver.2.2-1   239行目くらいを編集*/
+    /*ver.2.3-3   239行目くらいを編集*/
 
 
     </script>
