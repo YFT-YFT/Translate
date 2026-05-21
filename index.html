@@ -1010,7 +1010,7 @@ function updateUIMode() {
     });
 
     logContainer.prepend(row);
-    chatLog.push(${getTimestamp()}\t${text}\t${trans}\t${reTrans || ""});
+    chatLog.push(`${getTimestamp()}\t${text}\t${trans}\t${reTrans || ""}`);
     row.dataset.chatLogIndex = chatLog.length - 1;
       // ★ 上限超過時はremoveする前にイベントリスナーを解放
     while (logContainer.children.length > 50) {
