@@ -1010,8 +1010,9 @@ function updateUIMode() {
     });
 
     logContainer.prepend(row);
-    chatLog.push(`${getTimestamp()}\t${text}\t${trans}\t${reTrans || ""}`);
-    // ★ 上限超過時はremoveする前にイベントリスナーを解放
+    chatLog.push(${getTimestamp()}\t${text}\t${trans}\t${reTrans || ""});
+    row.dataset.chatLogIndex = chatLog.length - 1;
+      // ★ 上限超過時はremoveする前にイベントリスナーを解放
     while (logContainer.children.length > 50) {
       const old = logContainer.lastChild;
       if (old) {
@@ -1361,8 +1362,16 @@ function updateUIMode() {
       reTransEl.style.display = newReTrans ? "" : "none";
     }
 
-    // origテキストを更新
+// origテキストを更新
     origEl.textContent = newText;
+
+// ★ chatLog（保存用配列）も更新する
+    const logIdx = parseInt(row.dataset.chatLogIndex, 10);
+    if (!isNaN(logIdx) && logIdx >= 0 && logIdx < chatLog.length) {
+      const parts = chatLog[logIdx].split('\t');
+      const timestamp = parts[0] || getTimestamp();
+      chatLog[logIdx] = `${timestamp}\t${newText}\t${newTrans}\t${newReTrans || ""}`;
+    }
 
     // ★ フラグを解除（次の編集が可能になる）
     row._isCommitting = false;
