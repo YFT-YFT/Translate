@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>インタプ (simultaneousINTERPreter)</title>
+  <title>インタプ</title>
   <link rel="manifest" href="manifest.json">
 <script>
   if ('serviceWorker' in navigator) {
@@ -348,7 +348,7 @@ html, body {
     高:<input type="range" id="pitch-slider" min="0.5" max="2.0" step="0.1" value="1.0" style="width:60px">
   </div>
   
-  <button id="btn-help">使い方</button>
+  <button id="btn-help">説明書</button>
 </div>
 
 <div id="display-area">
@@ -367,7 +367,7 @@ html, body {
 </div>
 
 <div id="modal-help">
-  <h2>📖 インタプ (simultaneousINTERPreter) 使い方</h2>
+  <h2>📖 インタプ <small style="font-size:0.55em; opacity:0.7;">(simultaneousINTERPreter)</small> 説明書</h2>
 
   <div class="help-section">
     <h3>1. 対応ブラウザ・推奨環境（まずご確認ください）</h3>
@@ -484,7 +484,7 @@ html, body {
     </ul>
   </div>
 
-  <button id="btn-close-help" onclick="document.getElementById('modal-help').style.display='none'">使い方　を閉じる</button>
+  <button id="btn-close-help" onclick="document.getElementById('modal-help').style.display='none'">説明書　を閉じる</button>
 </div>
 
 <script>
