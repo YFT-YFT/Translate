@@ -324,7 +324,6 @@ html, body {
 
   <div class="group">
     分割:<input type="number" id="split-sec" value="1.0" step="0.1" min="0.1" style="width:35px">s 
-    保存:<input type="number" id="auto-save-min" value="10" min="1" style="width:35px">m
   </div>
 
 <div class="group">
@@ -339,14 +338,15 @@ html, body {
     高:<input type="range" id="pitch-slider" min="0.5" max="2.0" step="0.1" value="1.0" style="width:60px">
   </div>
 
-  <div class="group">
-    ログ名:<input type="text" id="file-name" placeholder="保存名" style="width:65px"> 
-    日時:<select id="name-date-pos">
-      <option value="none">無</option>
-      <option value="pre" selected>前</option>
-      <option value="post">後</option>
-    </select>
-  </div>
+<div class="group">
+  ログ名:<input type="text" id="file-name" placeholder="保存名" style="width:65px"> 
+  日時:<select id="name-date-pos">
+    <option value="none">無</option>
+    <option value="pre" selected>前</option>
+    <option value="post">後</option>
+  </select>
+  保存:<input type="number" id="auto-save-min" value="10" min="1" style="width:35px">m
+</div>
   
   <button id="btn-help">説明書</button>
 </div>
@@ -362,7 +362,7 @@ html, body {
 </div>
 
 <div class="footer-info">
-  <div class="footer-text">インタプ (simultaneousINTERPreter) Ver.3 (2026/6/11更新)</div>
+  <div class="footer-text">インタプ (simultaneousINTERPreter) Ver.3.01 (2026/6/11更新)</div>
   <div class="footer-text">Created by フジイヨウスケ with Gemini & ChatGPT & Claude</div>
 </div>
 
@@ -1492,17 +1492,7 @@ function updateUIMode() {
     if (e.code === 'Space') { e.preventDefault(); btnToggle.click(); }
   });
 
-  /* Ver.3 変更サマリー：保存ログのリセットタイミング修正
-     ★ saveLogFile()内の chatLog=[] を削除
-        【修正前】一時停止のたびに chatLog がリセットされ、
-                 再開後の分しか次のファイルに保存されなかった
-        【修正後】chatLog は 🗑ボタン または F5 でのみリセット
-                 一時停止→再開を繰り返しても常に全ログが保存される
-     （Ver.2.32-18からの継続）
-     - 使い方モーダル全面改訂・セクション順番変更
-     - 🗑ボタンを青いライン右端に配置
-     - 一時停止機能・Edge固有クラッシュ対策
-     名前変更→インタプ (simultaneousINTERPreter)
+  /* Ver.3.01 変更 ボタン配置変更
   */
 </script>
 </body>
